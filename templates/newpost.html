@@ -7,11 +7,35 @@
 <form method='post'>
 
     <label for='title'>New Post:</label>
-    <input type='text' id='title' name='title' />
+    <input type='text' id='title' name='title' value='{{title}}' />
+    {% with messages = get_flashed_messages(category_filter=["titleerror"]) %}
+        {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
 
     <label for='body'>
-    <textarea name='body' id='body'></textarea>
+    <textarea name='body' id='body'>{{body}}</textarea>
+    {% with messages = get_flashed_messages(category_filter=["bodyerror"]) %}
+        {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
 
     <input type='submit' value='Add Post' />
 </form>
 {% endblock %}
+
+    {% with messages = get_flashed_messages(with_categories=titleerror) %}
+        <span class='{{category}}'>{{message}}</span>
+            <li class="{{category}}">{{message}}</li>
+        </ul>
+    {% endwith %}

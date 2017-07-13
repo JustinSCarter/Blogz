@@ -24,6 +24,10 @@ class Blog(db.Model):
 @app.route('/blog', methods=['POST', 'GET'])
 def index():
     '''displays blog posts on a home page'''
+    id = request.args.get('id')
+    if id:
+        blog = Blog.query.filter_by(id=id).first()
+        return render_template('blog.html', title=blog.title, body=blog.body)
 
     blogs = Blog.query.all()
     return render_template('blog.html', title='Build a Blog', blogs=blogs)
@@ -35,6 +39,12 @@ def blog_post():
     if request.method == 'POST':
         new_post_title = request.form['title']
         new_post_body = request.form['body']
+        if not new_post_body or not new_post_title:
+            if not new_post_title:
+                flash('Post requires a title', 'titleerror')
+            if not new_post_body:
+                flash('Post requires a body', 'bodyerror')
+            return render_template('newpost.html', body=new_post_body, title=new_post_title)
         blog_post = Blog(new_post_title, new_post_body)
         db.session.add(blog_post)
         db.session.commit()
@@ -42,9 +52,7 @@ def blog_post():
         return render_template('blog.html', title='Build a Blog', blogs=blogs)
 
     return render_template('newpost.html')
-    #if not new_post_body:
 
-    #if not new_post_title:
 
 
 # def add_movie():
