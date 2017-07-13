@@ -1,20 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Page Title -->
-<h1> Add a new blog post</h1>
-<!-- Text input box for blog post title -->
+
+<h1 align='center'> Add a new blog post</h1>
+
 <form method='post'>
 
-    <label>
-        New Post:
-        <input type='text' name='title' />
-    </label>
+    <label for='title'>New Post:</label>
+    <input type='text' id='title' name='title' />
 
-    <label>
-        <textarea name='body'
-    </label>
-    
-    <input type='submit' value='Add Task' />
+    <label for='body'>
+    <textarea name='body' id='body'></textarea>
+
+    <input type='submit' value='Add Post' />
 </form>
 {% endblock %}

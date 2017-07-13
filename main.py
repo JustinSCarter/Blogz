@@ -18,6 +18,9 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+    def __repr__(self):
+        return '<Title %r>' % self.title
+
 @app.route('/blog', methods=['POST', 'GET'])
 def index():
     '''displays blog posts on a home page'''
@@ -29,14 +32,19 @@ def index():
 def blog_post():
     #creates a new blog object in the database and then returns to the homepage and 
     #returns errors if text inputs left blank and returns input into the inputs
-    new_post_title = request.form['']
-    new_post_body = request.form['']
+    if request.method == 'POST':
+        new_post_title = request.form['title']
+        new_post_body = request.form['body']
+        blog_post = Blog(new_post_title, new_post_body)
+        db.session.add(blog_post)
+        db.session.commit()
+        blogs = Blog.query.all()
+        return render_template('blog.html', title='Build a Blog', blogs=blogs)
 
-    if not new_post_body:
+    return render_template('newpost.html')
+    #if not new_post_body:
 
-    if not new_post_title:
-
-    
+    #if not new_post_title:
 
 
 # def add_movie():
