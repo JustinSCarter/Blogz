@@ -40,9 +40,9 @@ def blog_post():
         new_post_body = request.form['body']
         if not new_post_body or not new_post_title:
             if not new_post_title:
-                flash('Post requires a title', 'titleerror')
+                flash('A title is required.', 'titleerror')
             if not new_post_body:
-                flash('Post requires a body', 'bodyerror')
+                flash('Your post needs some content.', 'bodyerror')
             return render_template('newpost.html', body=new_post_body, title=new_post_title)
         new_post = Blog(new_post_title, new_post_body)
         db.session.add(new_post)
