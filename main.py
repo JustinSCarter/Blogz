@@ -1,6 +1,5 @@
-from flask import Flask, request, redirect, render_template, session, flash
+from flask import Flask, request, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -35,6 +34,7 @@ def index():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def blog_post():
+    '''Form to create a new blog entry'''
     if request.method == 'POST':
         new_post_title = request.form['title']
         new_post_body = request.form['body']
