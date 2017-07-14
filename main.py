@@ -28,8 +28,7 @@ def index():
     if id:
         blog = Blog.query.filter_by(id=id).first()
         return render_template('blog.html', title=blog.title, body=blog.body)
-
-    blogs = Blog.query.all()
+    blogs = Blog.query.order_by(Blog.id.desc()).all()
     return render_template('blog.html', title='Build a Blog', blogs=blogs)
 
 @app.route('/newpost', methods=['POST', 'GET'])
@@ -55,6 +54,7 @@ def blog_post():
 
 @app.route('/')
 def gotoindex():
+    '''redirects to /blog route'''
     return redirect("/blog", code=302)
 if __name__ == '__main__':
     app.run()

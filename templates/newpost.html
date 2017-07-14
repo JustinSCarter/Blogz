@@ -6,7 +6,6 @@
 
 <form method='post'>
     <p class=form>
-        <!-- <label for='title'>Post Title:</label> -->
         <input type='text' id='title' name='title' value='{{title}}' placeholder="Blog Title..."/>
         {% with messages = get_flashed_messages(category_filter=["titleerror"]) %}
             {% if messages %}
@@ -20,7 +19,6 @@
     </p>
 
     <p class=form>
-        <!-- <label for='body'>Blog post:</label> -->
         <textarea name='body' id='body' placeholder="Blog content...">{{body}}</textarea>
         {% with messages = get_flashed_messages(category_filter=["bodyerror"]) %}
             {% if messages %}
