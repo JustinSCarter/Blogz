@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, flash
+from flask import Flask, request, render_template, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -53,5 +53,8 @@ def blog_post():
 
     return render_template('newpost.html')
 
+@app.route('/')
+def gotoindex():
+    return redirect("/blog", code=302)
 if __name__ == '__main__':
     app.run()
