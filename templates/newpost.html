@@ -35,9 +35,3 @@
     <input type='submit' value='Add Post' />
 </form>
 {% endblock %}
-
-    {% with messages = get_flashed_messages(with_categories=titleerror) %}
-        <span class='{{category}}'>{{message}}</span>
-            <li class="{{category}}">{{message}}</li>
-        </ul>
-    {% endwith %}
