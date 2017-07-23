@@ -37,13 +37,14 @@ class User(db.Model):
         return '<User %r>' % self.Username
 
 @app.route('/blog', methods=['POST', 'GET'])
-def blog_list():
+def blog():
     id = request.args.get('id')
     if id:
         blog = Blog.query.filter_by(id=id).first()
         return render_template('SingleUser.html', title=blog.title, body=blog.body)
     blogs = Blog.query.order_by(Blog.id.asc()).all()
-    return render_template('blog.html', title='List of all blog posts:', blogs=blogs)
+    users = User.query.all()
+    return render_template('blog.html', title='List of all blog posts:', blogs=blogs, users=users)
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_blog():
@@ -76,24 +77,23 @@ def register():
         verify = request.form['verify']
         existing_user = User.query.filter_by(username=username).first()
 
-        if not username:
-            flash('You need a username.')
-            return redirect('/register')
-
-        if password != verify:
-            flash('Make sure you type the same password twice.')
-            return redirect('/register')
-
-        if existing_user:
-            flash('It looks like that user already exists.')
-            return redirect('/register')
+        if password != verify or existing_user or len(username)<3 or len(password)<3:
+            if len(username)<3:
+                flash('Please enter a username of at least 3 characters.')
+            elif len(password)<3:
+                flash('Please enter a password of at least 3 characters.')
+            elif password != verify:
+                flash('Make sure you type the same password twice.')
+            elif existing_user:
+                flash('It looks like that user already exists.')
+            return render_template('register.html')
 
         else:
             new_user = User(username, password)
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
-            return redirect('/')
+            return redirect('/newpost')
 
     else:
         return render_template('register.html')
@@ -126,7 +126,7 @@ def index():
 @app.route("/logout")
 def logout():
     del session['username']
-    return redirect("/")
+    return redirect("/blog")
 
 @app.route('/')
 def gotoindex():
