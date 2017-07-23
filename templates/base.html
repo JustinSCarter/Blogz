@@ -2,19 +2,84 @@
 <html>
     <head>
         <title>{{title}}</title>
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}"/>
+        <style>            .flashes {
+                font: 15px;
+                color: red;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-style: italic;
+            }
+            .form {
+                display: block;
+                padding: 15px;
+            }
+            body {
+                background-color: #c2d4d8;
+                font: blue;
+            }
+            div {
+                display: inline-block;
+                padding: 10px;
+                border: 2px solid black;
+                background-color: #dbe9d8;
+                border-radius: 10px;
+            }
+            form {
+                 background-color: #dbe9d8;
+                 padding: 40px;
+                 margin: 0 auto;
+                 width: 540px;
+                 font: 16px sans-serif;
+                 border-radius: 30px;
+            }
+            textarea {
+                margin: 10px 0;
+                width: 500px;
+                height: 120px;
+            }
+            h2 {
+                font-size: 300%;
+                color: #003333;
+            }
+            p{
+                font-size: 100%;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                width: 400px;
+                word-wrap: break-word;
+            }
+            h3{
+                font-size: 200%;
+                color: #003333;
+            }
+            span{
+                width: 50%;
+            }
+        </style>
+        <!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}"/> -->
     </head>
-<body>
+    <body>
+        <div style='float: right'>
+          {% if 'username' in session %}
+            <a href="/logout">logout</a>
+          {% else %}
+            <a href="/login">login</a> | <a href="/register">register</a>
+          {% endif %}
+        </div>
+        <div style='float: center'>
+                <a href="/index">Home</a> | <a href="/blog">View All Posts</a> | <a href="/newpost">New Post</a>
+        </div>
 
-    <div>
-        <a href='/blog'>Blog Homepage</a>
-    </div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+              {% for message in messages %}
+              <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
 
-    <div>
-        <a href='/newpost'>Create New Post</a>
-    </div>
-    {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
 
-</body>
+    </body>
 </html>
