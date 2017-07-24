@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{title}}</h2>
-    <p>{{body}}</p>
+    <h2>Blog posts by {{owner}}:</h2>
         <span>
+            {% if not blogs %}
+                <h4>That user has no posts</h4>
+            {% endif %}
             {% for blog in blogs %}
             <a href=/blog?id={{blog.id}}><h3>{{blog.title}}</h3></a>
             <p>{{blog.body}}</p>

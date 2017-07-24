@@ -44,8 +44,9 @@ def blog():
         blog = Blog.query.filter_by(id=id).first()
         return render_template('blog.html', title=blog.title, body=blog.body)
     if owner_id:
+        owner = (User.query.filter_by(id=owner_id).first()).username
         blogs = Blog.query.filter_by(owner_id=owner_id).all()
-        return render_template('SingleUser.html', blogs=blogs)
+        return render_template('SingleUser.html', blogs=blogs, owner=owner)
     blogs = Blog.query.order_by(Blog.id.asc()).all()
     return render_template('blog.html', title='List of all blog posts:', blogs=blogs)
 
