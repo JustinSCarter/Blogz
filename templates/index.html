@@ -4,7 +4,7 @@
     <h2>User list:</h2>
     <span>
         {% for user in users %}
-        <p>{{user.username}}</p>
+        <a href=/blog?owner_id={{user.id}}><p>{{user.username}}</p></a>
         {% endfor %}
     </span>
 {% endblock %}

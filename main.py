@@ -34,17 +34,20 @@ class User(db.Model):
         self.password = password
 
     def __repr__(self):
-        return '<User %r>' % self.Username
+        return '<User %r>' % self.username
 
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
+    owner_id = request.args.get('owner_id')
     id = request.args.get('id')
     if id:
         blog = Blog.query.filter_by(id=id).first()
-        return render_template('SingleUser.html', title=blog.title, body=blog.body)
+        return render_template('blog.html', title=blog.title, body=blog.body)
+    if owner_id:
+        blogs = Blog.query.filter_by(owner_id=owner_id).all()
+        return render_template('SingleUser.html', blogs=blogs)
     blogs = Blog.query.order_by(Blog.id.asc()).all()
-    users = User.query.all()
-    return render_template('blog.html', title='List of all blog posts:', blogs=blogs, users=users)
+    return render_template('blog.html', title='List of all blog posts:', blogs=blogs)
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_blog():
