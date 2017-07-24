@@ -7,28 +7,10 @@
 <form method='post'>
     <p class=form>
         <input type='text' id='title' name='title' value='{{title}}' placeholder="Blog Title..."/>
-        {% with messages = get_flashed_messages(category_filter=["titleerror"]) %}
-            {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-            {% endif %}
-        {% endwith %}
     </p>
 
     <p class=form>
         <textarea name='body' id='body' placeholder="Blog content...">{{body}}</textarea>
-        {% with messages = get_flashed_messages(category_filter=["bodyerror"]) %}
-            {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-            {% endif %}
-        {% endwith %}
     </p>
     <input type='submit' value='Add Post' />
 </form>

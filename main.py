@@ -47,7 +47,7 @@ def blog():
         owner = (User.query.filter_by(id=owner_id).first()).username
         blogs = Blog.query.filter_by(owner_id=owner_id).all()
         return render_template('SingleUser.html', blogs=blogs, owner=owner)
-    blogs = Blog.query.order_by(Blog.id.asc()).all()
+    blogs = Blog.query.order_by(Blog.id.desc()).all()
     return render_template('blog.html', title='List of all blog posts:', blogs=blogs)
 
 @app.route('/newpost', methods=['POST', 'GET'])
