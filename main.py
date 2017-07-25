@@ -42,7 +42,7 @@ def blog():
     id = request.args.get('id')
     if id:
         blog = Blog.query.filter_by(id=id).first()
-        return render_template('blog.html', title=blog.title, body=blog.body)
+        return render_template('blog.html', blog=blog)
     if owner_id:
         owner = (User.query.filter_by(id=owner_id).first()).username
         blogs = Blog.query.filter_by(owner_id=owner_id).all()
@@ -69,7 +69,7 @@ def new_blog():
         db.session.commit()
         id = new_post.id
         blog = Blog.query.filter_by(id=id).first()
-        return render_template('blog.html', title=blog.title, body=blog.body)
+        return render_template('blog.html', blog=blog)
 
     return render_template('newpost.html')
 
@@ -130,6 +130,7 @@ def index():
 @app.route("/logout")
 def logout():
     del session['username']
+    flash('You have been logged out.')
     return redirect("/blog")
 
 @app.route('/')

@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{title}}</h2>
+{% if blog %}
+    <h3>{{blog.title}}</h3>
+    <p>{{blog.body}}</p>
+    <p>Posted by: <a href=/blog?owner_id={{blog.owner_id}}>{{blog.owner.username}}</a></p>
+{% endif %}
         <span>
             {% for blog in blogs %}
             <a href=/blog?id={{blog.id}}><h3>{{blog.title}}</h3></a>
